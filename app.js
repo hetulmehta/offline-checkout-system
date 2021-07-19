@@ -1,17 +1,8 @@
 const express = require("express");
 const app = express();
-const { NotFoundError, ClientError } = require("./Error");
-const FetchOneProduct = require("./models/FetchProducts");
+const router = require("./routes/ProductRoute");
 
-app.get("/:eancode", async (req, res) => {
-    const result = await FetchOneProduct(req.params.eancode);
-
-    return res.json({
-        success: true,
-        data: result,
-    });
-});
-
+app.use("/" , router);
 
 app.all("*" , (req,res,next)=>{
    return next(NotFoundError("This route does not exists!"));
