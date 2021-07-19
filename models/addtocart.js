@@ -1,19 +1,17 @@
 const { NotFoundError, ClientError } = require("../Error");
 const Database = require("../services/DBConnect");
 
-const FetchOneProduct = async (eancode) => {
+const addtocart = async (userID,eancode) => {
     try {
         const query = `
-            SELECT * FROM Product
-            WHERE eancode=? and isaddedtocart=0
+            INSERT INTO Cart("userID","eancode") VALUES(?,?)
         `;
-
-        const result = await Database.query(query, eancode);
-
+        const result = await Database.query(query,[userID,eancode]);
         return result;
+
     } catch (err) {
         console.log(err);
     }
 };
 
-module.exports = FetchOneProduct;
+module.exports = addtocart;
