@@ -12,4 +12,16 @@ app.get("/:eancode", async (req, res) => {
     });
 });
 
+
+app.all("*" , (req,res,next)=>{
+   return next(NotFoundError("This route does not exists!"));
+});
+
+app.use((err,req,res)=>{
+    res.status(err.statusCode).json({
+        status : "Failed",
+        message : err.message,
+    });
+})
+
 module.exports = app;
