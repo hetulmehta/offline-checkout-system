@@ -6,7 +6,7 @@ const router = require("./routes/ProductRoute");
 app.use(cors({
     origin : "*",
 }));
-
+app.use(express.json())
 app.use("/" , router);
 
 app.all("*" , (req,res,next)=>{

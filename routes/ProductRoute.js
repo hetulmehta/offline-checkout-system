@@ -1,7 +1,7 @@
 const express = require("express");
 const addtocart = require("../models/addtocart");
-const FetchOneProduct = require("./models/FetchProducts");
-const listcart=require("./models/listcart")
+const FetchOneProduct = require("../models/FetchProducts");
+const listcart=require("../models/listcart")
 const Product = express.Router();
 
 Product.get("/:eancode", async (req, res, next) => {
@@ -29,7 +29,7 @@ Product.post("/addtocart", async (req, res, next) => {
     });
 Product.get("/checkout/:id", async (req, res, next) => {
     try{
-        const result= await listcart(req.params.userID)
+        const result= await listcart(req.params.id)
         return res.json({
             success: true,
             data: result,
