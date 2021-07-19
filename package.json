@@ -1,0 +1,25 @@
+{
+  "name": "offline-checkout-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hetulmehta/offline-checkout-system.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hetulmehta/offline-checkout-system/issues"
+  },
+  "homepage": "https://github.com/hetulmehta/offline-checkout-system#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mariadb": "^2.5.4"
+  }
+}
