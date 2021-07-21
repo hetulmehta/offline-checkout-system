@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
     shadow: {
-        marginBottom: 15,
+        marginBottom: 5,
         height: 'auto',
         borderRadius: 20,
         paddingVertical: 10,
