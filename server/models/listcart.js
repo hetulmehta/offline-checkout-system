@@ -1,8 +1,7 @@
-const { NotFoundError, ClientError } = require("../Error");
 const Database = require("../services/DBConnect");
 
 const listcart = async (userID) => {
-    console.log(userID)
+    console.log(userID);
     try {
         const query = `
         SELECT * FROM Cart INNER JOIN Product ON Product.eancode=Cart.Eancode WHERE Cart.userID=?
@@ -11,7 +10,8 @@ const listcart = async (userID) => {
         return result;
 
     } catch (err) {
-        console.log(err);
+       console.log(err);
+       throw err;
     }
 };
 

@@ -1,4 +1,3 @@
-const { NotFoundError, ClientError } = require("../Error");
 const Database = require("../services/DBConnect");
 
 const FetchOneProduct = async (eancode) => {
@@ -9,10 +8,11 @@ const FetchOneProduct = async (eancode) => {
         `;
 
         const result = await Database.query(query, eancode);
-
         return result;
+        
     } catch (err) {
         console.log(err);
+        throw err;
     }
 };
 

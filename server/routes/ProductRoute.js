@@ -1,43 +1,57 @@
 const express = require("express");
 const addtocart = require("../models/addtocart");
 const FetchOneProduct = require("../models/FetchProducts");
-const listcart=require("../models/listcart")
+const listcart=require("../models/listcart");
+const {InternalServerError, ClientError} = require("../Error");
 const Product = express.Router();
 
 Product.get("/:eancode", async (req, res, next) => {
     try{
-        console.log("Request recieved!")
+        console.log("Request recieved!");
         const result = await FetchOneProduct(req.params.eancode);
-        return res.json({
-            success: true,
+        return res.status(200).json({
+            success: 'true',
             data: result,
         });
     }catch(err){
-        return next(err);
+        console.log(err);
+        return next(new InternalServerError("Something went wrong!"));
     }
 });
 Product.post("/addtocart", async (req, res, next) => {
     try{
-        const result= await addtocart(req.body.userID,req.body.eancode)
+        const result = await addtocart(req.body.userID,req.body.eancode);
         if (result){
-            res.json({"success":true})
-        }
-        else{
-            res.json({"success":false})
+            res.status(201).json(
+                {
+                    success: 'true',
+                    message : "Item successfully added into the cart!"
+                }
+            )
         }
     }
-    catch(err){console.log(err)}
+    catch(err){
+        console.log(err);
+        if(err.text.includes("Duplicate entry")){
+            return next(new ClientError("Item already added into the cart"));
+        }
+        else{
+            return next(new InternalServerError("Something went wrong!"));
+        }
+    }
     });
+    
 Product.get("/checkout/:id", async (req, res, next) => {
     try{
-        const result= await listcart(req.params.id)
-        return res.json({
-            success: true,
+        const result = await listcart(req.params.id);
+        return res.status(200).json({
+            success: 'true',
             data: result,
         });
     }
     catch(err){
-        console.log(err)
+        console.log(err);
+        return next(new InternalServerError("Something went wrong!"));
     }
 });
 
