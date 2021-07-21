@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, Text, View , AnimatedImage } from 'react-native-ui-lib';
+import { TouchableOpacity, Text, View , AnimatedImage, Colors } from 'react-native-ui-lib';
 import CstmShadowView from './CstmShadowView';
 import NavbarBack from "./NavBarBack";
 import { Dimensions, StyleSheet} from 'react-native';
@@ -14,6 +14,7 @@ const ProductDetails = ({ route, navigation }) => {
     useEffect(() => {
         const { Details } = route.params;
         setProductData(Details.data[0])
+        console.log(ProductData)
     }, [route.params]);
 
     const addToCart = async() => {
@@ -35,15 +36,22 @@ const ProductDetails = ({ route, navigation }) => {
             Title={"Product"} 
             Navigation={navigation.goBack}
             Cart={()=>navigation.navigate('Cart')} />
-            <View marginH-15>
-                <CstmShadowView
-                    style={{ marginBottom: 20, height: 'auto',borderRadius: 20 }}>
+                <CstmShadowView style={styles.shadow}>
                         <AnimatedImage
                             style={styles.headerImage}
                             source={{ uri: ProductData.product_image_url }}
                             loader={<Loader />}
                             containerStyle={styles.AnimatedImageContainerStyle}
                         />
+                {/* <View>
+                        <Text
+                            hb1
+                            style={styles.headerText}
+                            numberOfLines={2} ellipsizeMode='tail'
+                        >
+                            {ProductData.description}
+                        </Text>
+                </View> */}
                 </CstmShadowView>
                 <CstmShadowView
                     style={{ marginBottom: 10, marginTop: 40 }}>
@@ -66,22 +74,33 @@ const ProductDetails = ({ route, navigation }) => {
                     </TouchableOpacity>
                 </CstmShadowView>
             </View>
-        </View>
     )
 }
 
 const styles = StyleSheet.create({
+    headerText: {
+        paddingTop: 10,
+        marginLeft: 10,
+        marginRight: 10,
+    },
     headerImage: {
-        height: 150,
-        width: 150,
+        height: 125,
+        width: 125,
         flex:1,
-        borderRadius:10
+        borderRadius:10,
     },
     AnimatedImageContainerStyle: {
         backgroundColor: Colors.white,
-        width:150,
-        height:150,
+        width:125,
+        height:125,
     },
+    shadow: {
+        marginBottom: 20, 
+        height: 'auto',
+        borderRadius: 20, 
+        paddingVertical:10,
+        marginHorizontal: 15,
+    }
 })
 
 export default ProductDetails;
