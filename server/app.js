@@ -20,7 +20,8 @@ app.all("*" , (req,res,next)=>{
    return next(new NotFoundError("This route does not exists!"));
 });
 
-app.use((err,req,res)=>{
+app.use((err,req,res,next)=>{
+    console.log("error came into the middleware!");
     err.statusCode = err.statusCode || 500;
     err.message = err.message || "Something went wrong!!";
     res.status(err.statusCode).json({

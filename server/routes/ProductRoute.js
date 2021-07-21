@@ -31,6 +31,7 @@ Product.post("/addtocart", async (req, res, next) => {
         }
     }
     catch(err){
+        
         console.log(err);
         if(err.text.includes("Duplicate entry")){
             return next(new ClientError("Item already added into the cart"));
