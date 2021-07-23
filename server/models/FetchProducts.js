@@ -15,7 +15,7 @@ const FetchOneProduct = async (userID,eancode) => {
         )
 
         if(resp[0]){
-            isAdded = true;
+            result[0]["inCart"] = isAdded;
         }
 
         const query = `
@@ -24,7 +24,6 @@ const FetchOneProduct = async (userID,eancode) => {
         `;
 
         const result = await conn.query(query, eancode);
-        result[0]["inCart"] = isAdded;
 
         console.log("main result : " , result[0]);
 
