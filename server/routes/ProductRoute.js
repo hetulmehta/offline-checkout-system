@@ -5,10 +5,10 @@ const listcart=require("../models/listcart");
 const RemoveFromCart = require("../models/RemoveFromCart");
 const Product = express.Router();
 
-Product.get("/:eancode", async (req, res, next) => {
+Product.get("/:eancode/:id", async (req, res, next) => {
     try{
         console.log("Request recieved!");
-        const result = await FetchOneProduct(req.params.eancode);
+        const result = await FetchOneProduct(req.params.id,req.params.eancode);
         return res.status(200).json({
             success: 'true',
             data: result,

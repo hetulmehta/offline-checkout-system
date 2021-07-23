@@ -26,8 +26,8 @@ const addtocart = async (userID, eancode) => {
 
     await conn.commit();
     conn.release();
-    console.log("result : "  + result);
-    console.log("result1 : "  + result.Id);
+
+    console.log("result1 : "  + result.insertId);
 
     return result;
 
