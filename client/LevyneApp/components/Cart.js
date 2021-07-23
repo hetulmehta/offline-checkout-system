@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native-ui-lib'
 import Axios from 'axios';
-import ProductComponent from './ProductComponent'
+import CartComponent from './CartComponent'
 import NavBarBack from './NavBarBack';
 import { Dimensions, FlatList } from 'react-native';
-import CstmShadowView from './CstmShadowView';
+import Loader from './Loader';
 
 const id = 1;
 const screenHeight = Dimensions.get('window').height;
 
 const Cart = ({navigation}) => {
     const [cart, setCart] = useState([]);
+    const [Loading, isLoading] = useState(false)
 
     useEffect(async () => {
         try {
@@ -20,7 +21,20 @@ const Cart = ({navigation}) => {
         } catch (e) {
             console.log(e)
         }
-    }, []);
+    }, [cart]);
+
+    const removeItem = async (item) => {
+        isLoading(true)
+        try {
+            await Axios.post('http://192.168.1.4:3000/removefromcart', {
+                userID: 1,
+                eancode: item.item.eancode
+            })
+            isLoading(false)
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     return (
         <View style={{ height: screenHeight, backgroundColor: '#FFFFFF' }}>
@@ -43,12 +57,13 @@ const Cart = ({navigation}) => {
                             }
                             renderItem={(item) =>
                                 <View marginH-15>
-                                    <ProductComponent
+                                    <CartComponent
                                         Image={item.item.product_image_url}
                                         Brand={item.item.brand}
                                         SubCategory={item.item.sub_category}
                                         SalePrice={item.item.sale_price}
-                                        MarketPrice={item.item.market_price} />
+                                        MarketPrice={item.item.market_price} 
+                                        removeProduct={()=>removeItem(item)}/>
                                 </View>}
                             // onEndReached={this.onEndReached}
                             onEndReachedThreshold={0.75}
