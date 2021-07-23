@@ -15,16 +15,28 @@ const ProductDetails = ({ route, navigation }) => {
     useEffect(() => {
         const { Details } = route.params;
         setProductData(Details.data[0])
-        // console.log(Details)
+        console.log(Details)
     }, [route.params]);
 
     const addToCart = async () => {
-        setInCart(true)
         try {
-            const resp = await Axios.post('http://192.168.1.4:3000/addtocart', {
+            await Axios.post('http://192.168.1.4:3000/addtocart', {
                 userID: 1,
                 eancode: ProductData.eancode
             })
+            setInCart(true)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const removeFromCart = async () => {
+        try {
+            await Axios.post('http://192.168.1.4:3000/removefromcart', {
+                userID: 1,
+                eancode: ProductData.eancode
+            })
+            setInCart(false)
         } catch (e) {
             console.log(e)
         }
@@ -51,7 +63,8 @@ const ProductDetails = ({ route, navigation }) => {
                     <CstmShadowView
                         style={{ marginBottom: 10, marginTop: 30 }}>
                         {inCart ? (
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={removeFromCart}>
                                 <Text centerV style={{ color: '#808080', textAlign: 'center', fontSize: 15, padding: 15 }}>
                                     Remove from cart
                                 </Text>
