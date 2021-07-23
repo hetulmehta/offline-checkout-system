@@ -4,7 +4,7 @@ const FetchOneProduct = async (eancode) => {
     try {
         const query = `
             SELECT * FROM Product
-            WHERE eancode=? and isaddedtocart=0
+            WHERE eancode=?
         `;
 
         const result = await Database.query(query, eancode);

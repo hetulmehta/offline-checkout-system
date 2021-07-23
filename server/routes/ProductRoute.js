@@ -2,7 +2,7 @@ const express = require("express");
 const addtocart = require("../models/addtocart");
 const FetchOneProduct = require("../models/FetchProducts");
 const listcart=require("../models/listcart");
-const {InternalServerError, ClientError} = require("../Error");
+const RemoveFromCart = require("../models/RemoveFromCart");
 const Product = express.Router();
 
 Product.get("/:eancode", async (req, res, next) => {
@@ -15,7 +15,7 @@ Product.get("/:eancode", async (req, res, next) => {
         });
     }catch(err){
         console.log(err);
-        return next(new InternalServerError("Something went wrong!"));
+        return next(err);
     }
 });
 Product.post("/addtocart", async (req, res, next) => {
@@ -31,14 +31,8 @@ Product.post("/addtocart", async (req, res, next) => {
         }
     }
     catch(err){
-        
-        console.log(err);
-        if(err.text.includes("Duplicate entry")){
-            return next(new ClientError("Item already added into the cart"));
-        }
-        else{
-            return next(new InternalServerError("Something went wrong!"));
-        }
+            console.log(err);
+            return next(err);
     }
     });
     
@@ -52,8 +46,23 @@ Product.get("/checkout/:id", async (req, res, next) => {
     }
     catch(err){
         console.log(err);
-        return next(new InternalServerError("Something went wrong!"));
+        return next(err);
     }
+});
+
+Product.post("/removefromcart" , async (req,res,next)=>{
+      try{
+      
+      await RemoveFromCart(req.body.userID , req.body.eancode);
+      res.status(200).json({
+          status : "success",
+          message : "Item removed from the cart!",
+      });
+        
+      }catch(err){
+          console.log(err);
+          return next(err);
+      }
 });
 
 
