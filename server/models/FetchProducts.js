@@ -1,11 +1,9 @@
 const Database = require("../services/DBConnect");
 
 const FetchOneProduct = async (userID,eancode) => {
-
     const conn = await Database.getConnection();
     try {
         
-        let isAdded = false;
         await conn.beginTransaction();
 
         const resp = await conn.query(
@@ -14,16 +12,15 @@ const FetchOneProduct = async (userID,eancode) => {
             [eancode,userID]
         )
 
-        if(resp[0]){
-            result[0]["inCart"] = isAdded;
-        }
-
         const query = `
             SELECT * FROM Product
             WHERE eancode=?
         `;
 
         const result = await conn.query(query, eancode);
+        if(resp[0]){
+            result[0]["inCart"] = true;
+        }
 
         console.log("main result : " , result[0]);
 

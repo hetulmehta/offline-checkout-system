@@ -14,8 +14,11 @@ const ProductDetails = ({ route, navigation }) => {
 
     useEffect(() => {
         const { Details } = route.params;
-        setProductData(Details.data[0])
-        console.log(Details)
+        setProductData(Details.data)
+        // console.log(ProductData)
+        if (Details.data.inCart===true){
+            setInCart(true)
+        }
     }, [route.params]);
 
     const addToCart = async () => {

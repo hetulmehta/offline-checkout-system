@@ -26,7 +26,7 @@ export default class ScanScreen extends React.Component {
     onSuccess = async ({data: url}) => {
         try{
             this.setState({Loading: true})
-            const res = await Axios.get(`http://192.168.1.4:3000/${url}`);
+            const res = await Axios.get(`http://192.168.1.4:3000/fetchproduct/${url}/${'1'}`);
             const product = res.data;
             this.props.navigation.navigate('ProductDetails', {
                 Details: product,

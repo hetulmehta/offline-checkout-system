@@ -21,7 +21,7 @@ const Cart = ({navigation}) => {
         } catch (e) {
             console.log(e)
         }
-    }, [cart]);
+    }, []);
 
     const removeItem = async (item) => {
         isLoading(true)
