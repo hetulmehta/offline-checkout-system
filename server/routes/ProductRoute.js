@@ -5,7 +5,7 @@ const listcart=require("../models/listcart");
 const RemoveFromCart = require("../models/RemoveFromCart");
 const Product = express.Router();
 
-Product.get("/:eancode/:id", async (req, res, next) => {
+Product.get("/fetchproduct/:eancode/:id", async (req, res, next) => {
     try{
         console.log("Request recieved!");
         const result = await FetchOneProduct(req.params.id,req.params.eancode);
@@ -38,6 +38,7 @@ Product.post("/addtocart", async (req, res, next) => {
     
 Product.get("/checkout/:id", async (req, res, next) => {
     try{
+        console.log("hellooo");
         const result = await listcart(req.params.id);
         return res.status(200).json({
             success: 'true',
