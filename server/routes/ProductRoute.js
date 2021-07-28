@@ -1,6 +1,7 @@
 const express = require("express");
 const addtocart = require("../models/addtocart");
 const FetchOneProduct = require("../models/FetchProducts");
+const FetchAllProduct = require("../models/FetchAllProduct");
 const listcart=require("../models/listcart");
 const RemoveFromCart = require("../models/RemoveFromCart");
 const Product = express.Router();
@@ -64,6 +65,19 @@ Product.post("/removefromcart" , async (req,res,next)=>{
           console.log(err);
           return next(err);
       }
+});
+
+Product.get("/inventory" , async (req,res,next)=>{
+    try{
+        const result = await FetchAllProduct();
+        return res.status(200).json({
+            success: 'true',
+            data: result,
+        });
+    }catch(err){
+        console.log(err);
+        return next(err);
+    }
 });
 
 
