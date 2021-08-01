@@ -15,7 +15,7 @@ const Cart = ({navigation}) => {
 
     useEffect(async () => {
         try {
-            const resp = await Axios.get(`http://192.168.1.4:3000/checkout/${id}`)
+            const resp = await Axios.get(`http://192.168.1.4:3000/usercart/${id}`)
             const products = await resp.data.data
             setCart(products)
         } catch (e) {
