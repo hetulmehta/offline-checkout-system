@@ -43,7 +43,7 @@ const Table = () => {
   const renderTableHeader = () => {
     let header = Object.keys(students[0]);
     return header.map((key, index) => {
-      return <th key={index}>{key}</th>;
+      return <th key={index}>{key.toUpperCase()}</th>;
     });
   }
 
