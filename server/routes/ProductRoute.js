@@ -38,7 +38,7 @@ Product.post("/addtocart", async (req, res, next) => {
 
 Product.get("/usercart/:id", async (req, res, next) => {
     try {
-        console.log("hellooo");
+        // console.log("hellooo");
         const result = await listcart(req.params.id);
         return res.status(200).json({
             success: "true",

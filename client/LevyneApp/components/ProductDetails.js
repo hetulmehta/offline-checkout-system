@@ -5,6 +5,7 @@ import NavbarBack from "./NavBarBack";
 import { Dimensions } from 'react-native';
 import Axios from 'axios';
 import ProductComponent from './ProductComponent';
+import GLOBAL from '../Global'
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -13,17 +14,21 @@ const ProductDetails = ({ route, navigation }) => {
     const [inCart, setInCart] = useState(false)
 
     useEffect(() => {
+        const CancelToken = Axios.CancelToken.source();
         const { Details } = route.params;
         setProductData(Details.data)
         // console.log(ProductData)
-        if (Details.data.inCart===true){
-            setInCart(true)
+        if (Object.keys(ProductData).length !== 0){
+            if (Details.data.inCart===true){
+                setInCart(true)
+            }
         }
+        return CancelToken.cancel();
     }, [route.params]);
 
     const addToCart = async () => {
         try {
-            await Axios.post('http://192.168.1.4:3000/addtocart', {
+            await Axios.post(`${GLOBAL.url}/addtocart`, {
                 userID: 1,
                 eancode: ProductData.eancode
             })
@@ -35,7 +40,7 @@ const ProductDetails = ({ route, navigation }) => {
 
     const removeFromCart = async () => {
         try {
-            await Axios.post('http://192.168.1.4:3000/removefromcart', {
+            await Axios.post(`${GLOBAL.url}/removefromcart`, {
                 userID: 1,
                 eancode: ProductData.eancode
             })

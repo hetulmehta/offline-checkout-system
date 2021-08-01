@@ -5,6 +5,7 @@ import NavbarBack from "./NavBarBack";
 import { Dimensions , StyleSheet } from 'react-native';
 import Axios from 'axios';
 import Loader from './Loader';
+import GLOBAL from '../Global'
 
 const width = Dimensions.get('window').width
 const screenHeight = Dimensions.get('window').height;
@@ -25,13 +26,15 @@ export default class ScanScreen extends React.Component {
 
     onSuccess = async ({data: url}) => {
         try{
+            const CancelToken = Axios.CancelToken.source();
             this.setState({Loading: true})
-            const res = await Axios.get(`http://192.168.1.4:3000/fetchproduct/${url}/${'1'}`);
+            const res = await Axios.get(`${GLOBAL.url}/fetchproduct/${url}/${'1'}`);
             const product = res.data;
             this.props.navigation.navigate('ProductDetails', {
                 Details: product,
             });
             this.setState({Loading: false})
+            return CancelToken.cancel();
         } catch (error){
             console.log(error);
         }

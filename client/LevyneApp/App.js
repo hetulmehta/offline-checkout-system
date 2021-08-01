@@ -19,6 +19,7 @@ import HomeScreen from './components/Home';
 import ScanScreen from './components/QRCodeScanner'
 import ProductDetails from './components/ProductDetails'
 import Cart from './components/Cart'
+import Checkout from './components/Checkout'
 
 const { StatusBarManager } = NativeModules;
 
@@ -63,6 +64,7 @@ export default class App extends React.Component {
 					<Stack.Screen name="ScanScreen" component={ScanScreen} options={{ headerShown: false }} />
 					<Stack.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
 					<Stack.Screen name="Cart" component={Cart} options={{ headerShown: false }} />
+					<Stack.Screen name="Checkout" component={Checkout} options={{ headerShown: false }} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		);
