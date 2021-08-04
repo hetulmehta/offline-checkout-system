@@ -22,8 +22,17 @@ class InternalServerError extends Error {
     }
 }
 
+class DatabaseError extends Error{
+    constructor(message){
+        super(message);
+        this.statusCode = 503;
+        this.name = "DatabaseError";
+    }
+}
+
 module.exports = {
     ClientError,
     InternalServerError,
     NotFoundError,
+    DatabaseError,
 };
