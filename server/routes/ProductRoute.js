@@ -5,6 +5,7 @@ const FetchAllProduct = require("../models/FetchAllProduct");
 const listcart = require("../models/listcart");
 const RemoveFromCart = require("../models/RemoveFromCart");
 const CheckoutUser = require("../models/CheckoutUser");
+const {IncreaseQuantity} = require("../models/UpdateQuantity");
 
 const Product = express.Router();
 
@@ -49,6 +50,33 @@ Product.get("/usercart/:id", async (req, res, next) => {
         return next(err);
     }
 });
+
+Product.post("/increaseQuantity/:id" , async (req,res,next)=>{
+   try{
+      await IncreaseQuantity(req.params.id , req.body.eancode);
+
+      res.status(200).json({
+          status : "true",
+      });
+
+   }catch(err){
+       next(err);
+   }
+});
+
+// Product.post("/decreaseQuantity/:id" , async (req,res,next)=>{
+//     try{
+//        await increaseQuantity(req.params.id , req.body.eancode);
+ 
+//        res.status(200).json({
+//            status : "true",
+//        });
+ 
+//     }catch(err){
+        
+ 
+//     }
+//  });
 
 Product.post("/removefromcart", async (req, res, next) => {
     try {
